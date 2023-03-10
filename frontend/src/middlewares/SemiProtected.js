@@ -22,9 +22,7 @@ const Protected = ({ Component }) => {
             })
             .catch(err => {
                 console.log(err);
-                navigate('/login')
-            })
-            
+            })    
         }
         fetchData();
         

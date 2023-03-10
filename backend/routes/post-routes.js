@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 
-const { getPost, createPost, updatePost, updateComment, upvote, downvote, fetchPostbyAuthor } = require('../controller/post-controller')
+const { getPost, createPost, updatePost, updateComment, upvote, downvote, fetchPostbyAuthor, fetchPostbyId } = require('../controller/post-controller')
 
 Router.get('/', getPost)
 
@@ -15,6 +15,8 @@ Router.put('/:id/upvote', upvote) // updates post to upvote, Inputs: postId and 
 
 Router.put('/:id/downvote', downvote) // updates post to upvote, Inputs: postId and userId
 
-Router.get('/:id', fetchPostbyAuthor) // fetches all post by user
+Router.get('/user/:id', fetchPostbyAuthor) // fetches all post by user
+
+Router.get('/:id', fetchPostbyId)
 
 module.exports = Router

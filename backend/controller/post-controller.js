@@ -37,15 +37,31 @@ exports.updateComment = asyncHandler(async (req, res) => {
         content: content
     })
     newComment.save();
-    const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { comments: { $each: [newComment] } } }, { new: true });
-    res.status(200).json({ updatedPost, newComment })
+    const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { comments: { $each: [newComment] } } }, { new: true })
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author',
+                select: '-password -email'
+            }
+        })
+        .populate('author', '-password -email')
+    res.status(200).json(updatedPost)
 })
 
 
 exports.upvote = asyncHandler(async (req, res) => {
     const postId = req.params.id;
     const author = req.body.author;
-    const currentPost = await Post.findById(postId);
+    const currentPost = await Post.findById(postId)
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author',
+                select: '-password -email'
+            }
+        })
+        .populate('author', '-password -email')
     if (currentPost.voters.includes(author)) {
         currentPost.voters.pop(author);
         currentPost.votes -= 1;
@@ -61,7 +77,15 @@ exports.upvote = asyncHandler(async (req, res) => {
 exports.downvote = asyncHandler(async (req, res) => {
     const postId = req.params.id;
     const author = req.body.author;
-    const currentPost = await Post.findById(postId);
+    const currentPost = await Post.findById(postId)
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author',
+                select: '-password -email'
+            }
+        })
+        .populate('author', '-password -email')
     if (currentPost.voters.includes(author)) {
         currentPost.voters.pop(author);
         currentPost.votes += 1;
@@ -78,7 +102,20 @@ exports.downvote = asyncHandler(async (req, res) => {
 exports.fetchPostbyAuthor = asyncHandler(async (req, res) => {
     const author = req.params.id;
     const userPosts = await Post.find({ author: author })
-        .populate('comments')
     res.status(200).json(userPosts)
+})
+
+exports.fetchPostbyId = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const currentPost = await Post.findById(id)
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author',
+                select: '-password -email'
+            }
+        })
+        .populate('author', '-password -email')
+    res.status(200).json(currentPost)
 })
 

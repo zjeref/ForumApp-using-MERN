@@ -3,14 +3,14 @@ import { UserContext } from '../middlewares/User-state'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 
-import PostCard from '../components/Home/PostCard'
+import PostsCard from '../components/Home/PostsCard'
 import CreatePost from '../components/Home/CreatePost'
 import Footer from '../components/Footer'
 import CreateCommunity from '../components/Home/CreateCommunity'
 
 const Home = () => {
     const { data, dispatch } = useContext(UserContext);
-    const [posts,setPosts] = useState([])
+    const [posts, setPosts] = useState([])
 
     const logout = () => {
         dispatch({ type: 'login_status', payload: false })
@@ -18,25 +18,25 @@ const Home = () => {
         Cookies.remove('authToken')
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         async function fetchData() {
             await axios.get(`${process.env.REACT_APP_API_URL}/post/`)
-            .then(res => setPosts(res.data))
-            .catch(err => console.log(err))
+                .then(res => setPosts(res.data))
+                .catch(err => console.log(err))
         }
         fetchData();
         console.log(posts)
-    },[data])
+    }, [data])
 
     return (
         <div className="w-full text-white">
             <div className="w-full flex justify-center ">
                 <div className="w-4/5 flex space-x-7  my-[5vh]">
                     <div className="w-4/6 flex flex-col items-center">
-                        <CreatePost/>
+                        <CreatePost />
 
-                        {posts.map((post)=> {
-                            return <PostCard key={post._id} post={post}/>
+                        {posts.map((post) => {
+                            return <PostsCard key={post._id} post={post} />
                         })}
 
                     </div>

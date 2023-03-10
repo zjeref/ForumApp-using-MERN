@@ -16,7 +16,7 @@ const Login = () => {
       .then(res => {
         if (res.status === 200) {
           Cookies.set("authToken", res.data.token)
-          navigate('/home')
+          navigate('/')
         }
       })
       .catch(res => console.error(res.data))

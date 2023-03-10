@@ -1,25 +1,27 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../middlewares/User-state'
 import axios from 'axios'
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'
+import { formatTimeSinceCreation } from '../../middlewares/User-state'
 
 const PostCard = ({ post }) => {
-    const {data, dispatch} = useContext(UserContext);
+    const navigate = useNavigate();
+    const { data } = useContext(UserContext);
     const [currentPost, setCurrentPost] = useState(post);
 
     const updateVotes = async (action) => {
-        const userId = data.signed_user._id
+        const author = data.signed_user._id
         if (post) {
             switch (action) {
                 case "upvote": {
-                    console.log(userId, currentPost._id)
-                    axios.put(`${process.env.REACT_APP_API_URL}/post/${currentPost._id}/upvote`, {userId})
+                    axios.put(`${process.env.REACT_APP_API_URL}/post/${currentPost._id}/upvote`, { author })
                         .then((res) => setCurrentPost(res.data))
                         .catch(err => console.log(err))
                     break;
                 }
                 case "downvote": {
-                    axios.put(`${process.env.REACT_APP_API_URL}/post/${currentPost._id}/downvote`, {userId})
+                    axios.put(`${process.env.REACT_APP_API_URL}/post/${currentPost._id}/downvote`, { author })
                         .then((res) => setCurrentPost(res.data))
                         .catch(err => console.log(err))
                     break;
@@ -44,7 +46,7 @@ const PostCard = ({ post }) => {
                     <MdArrowDropDown />
                 </div>
             </div>
-            <div className="flex space-x-3 bg-slate-700 rounded-xl w-full pr-4 my-3">
+            <div className="flex space-x-3 bg-slate-700 rounded-xl w-full pr-4 my-3" onClick={() => navigate(`/post/${currentPost._id}`)}>
                 <div className="flex ">
                     <img src="https://source.unsplash.com/random" alt="" className='w-40 rounded-l-xl' />
                 </div>
@@ -64,7 +66,7 @@ const PostCard = ({ post }) => {
                             </div>
                             <div>
                                 <p>{currentPost.author.username}</p>
-                                <p>{currentPost.createdAt.slice(0, 10)}</p>
+                                <p>{formatTimeSinceCreation(currentPost.createdAt)}</p>
                             </div>
                         </div>
                         <div className="flex space-x-2 items-end">

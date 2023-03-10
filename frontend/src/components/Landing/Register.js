@@ -17,7 +17,7 @@ const Register = () => {
         await axios.post(`${process.env.REACT_APP_API_URL}/user/create`, {name:name, username:username ,email: email, password: password})
         .then(res => {
             Cookies.set('authToken', res.data.token)
-            navigate('/home');
+            navigate('/');
         })
         .catch(err => console.log(err))
     }
@@ -54,7 +54,7 @@ const Register = () => {
                     </button>
                     <div>
                         <span>Already Have an Account?</span>
-                        <Link to='/'>
+                        <Link to='/login'>
                             <span className='text-blue-700 underline ml-2'>Login</span>
                         </Link>
                     </div>
