@@ -6,7 +6,7 @@ import { UserContext } from './User-state'
 
 
 
-const Protected = ({ Component }) => {
+const SemiProtected = ({ Component }) => {
     const {data, dispatch} = useContext(UserContext);
     const navigate = useNavigate();
     let headers
@@ -34,4 +34,4 @@ const Protected = ({ Component }) => {
     )
 }
 
-export default Protected
+export default SemiProtected

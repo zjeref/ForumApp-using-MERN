@@ -8,12 +8,14 @@ const Navbar = () => {
     return (
         <div className="flex w-full justify-between py-[2vh] px-[3vw] bg-slate-700 text-white">
             <div className="flex space-x-2">
-                <div className="">
+                {/* <div className="">
                     <img src="https://source.unsplash.com/random" alt="" className='w-10 h-10 rounded-full' />
-                </div>
+                </div> */}
                 <div className="text-3xl">
-                    <span>Forum</span>
-                    <span className="text-green-300">App</span>
+                    <Link to="/">
+                        <span>Forum</span>
+                        <span className="text-green-300">App</span>
+                    </Link>
                 </div>
             </div>
             <div>
@@ -26,7 +28,7 @@ const Navbar = () => {
                 <div className="">
                     <div className="flex space-x-2">
                         <div className="">
-                            <img src="https://source.unsplash.com/random" alt="" className='w-10 h-10 rounded-full' />
+                            <img src={data.signed_user.avatar} alt="" className='w-10 h-10 rounded-full' />
                         </div>
 
                         <div>

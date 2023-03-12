@@ -1,4 +1,6 @@
+require('dotenv').config
 const asyncHandler = require('express-async-handler');
+const axios = require('axios');
 const Post = require('../model/Post');
 const User = require('../model/User');
 const Comment = require('../model/Comment');
@@ -10,12 +12,33 @@ exports.getPost = asyncHandler(async (req, res) => {
     res.status(200).json(posts)
 })
 
+
 exports.createPost = asyncHandler(async (req, res) => {
     const { title, description, tags, author } = req.body;
+    const image = req.file;
+    let imageUrl;
+
+    const body = {
+        image: image.buffer.toString('base64'), // Convert the file buffer to a base64-encoded string
+        type: 'base64'
+    };
+
+    const headers = {
+        Authorization: `Client-ID ${process.env.IMGUR_ID}` 
+    }
+    
+    try {
+        const res = await axios.post('https://api.imgur.com/3/image', body, { headers });
+        imageUrl = res.data.data.link
+    } catch (error) {
+        return res.status(501).json({ message: 'File Upload Error' });
+    }
+
     const newPost = new Post({
         title: title,
         description: description,
         tags: tags,
+        image: imageUrl,
         author: author
     })
     await newPost.save();

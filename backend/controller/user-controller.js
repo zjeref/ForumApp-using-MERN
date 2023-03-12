@@ -1,4 +1,6 @@
+require('dotenv').config();
 const asyncHandler = require('express-async-handler');
+const axios = require('axios')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../model/User')
@@ -6,18 +8,36 @@ const User = require('../model/User')
 
 exports.createAccount = asyncHandler(async (req, res) => {
     const { name, username, email, password } = req.body;
+    const avatar = req.file;
+    let imageUrl;
 
     const existingUser = await User.findOne({ $or: [{ username: username }, { email: email }] })
     if (existingUser) {
         return res.status(409).json({ error: 'Already exist' })
     }
 
+    const body = {
+        image: avatar.buffer.toString('base64'), // Convert the file buffer to a base64-encoded string
+        type: 'base64'
+    };
+
+    const headers = {
+        Authorization: `Client-ID ${process.env.IMGUR_ID}`, 
+    };
+
+    try {
+        const res = await axios.post('https://api.imgur.com/3/image', body, { headers });
+        imageUrl = res.data.data.link
+    } catch (error) {
+        return res.status(501).json({ message: 'File Upload Error' });
+    }
     const encry_password = bcrypt.hashSync(password)
     const newUser = new User({
         name: name,
         username: username,
         email: email,
-        password: encry_password
+        password: encry_password,
+        avatar: imageUrl
     })
     await newUser.save()
 
@@ -27,6 +47,7 @@ exports.createAccount = asyncHandler(async (req, res) => {
         name: newUser.name,
         username: newUser.username,
         email: newUser.email,
+        avatar: newUser.avatar,
         token: generateToken(newUser._id)
     })
 })

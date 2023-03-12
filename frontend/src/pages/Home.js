@@ -25,7 +25,6 @@ const Home = () => {
                 .catch(err => console.log(err))
         }
         fetchData();
-        console.log(posts)
     }, [data])
 
     return (
@@ -36,7 +35,7 @@ const Home = () => {
                         <CreatePost />
 
                         {posts.map((post) => {
-                            return <PostsCard key={post._id} post={post} />
+                            return <PostsCard key={post?._id} post={post} />
                         })}
 
                     </div>

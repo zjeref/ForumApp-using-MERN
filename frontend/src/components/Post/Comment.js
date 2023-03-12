@@ -5,7 +5,7 @@ const Comment = ({ comment }) => {
     return (
         <div className='flex space-x-3 w-full bg-slate-700 p-2 border-b-2'>
             <div className='mt-2 w-10 flex flex-shrink-0'>
-                <img src="https://source.unsplash.com/random" alt="" className='w-12 h-10 rounded-full' />
+                <img src={comment.author.avatar} alt="" className='w-12 h-10 rounded-full' />
             </div>
             <div>
                 <div className='flex space-x-4'>

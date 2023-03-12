@@ -76,11 +76,11 @@ const PostCard = ({ id }) => {
                     <div className="space-y-3 mb-2">
                         <div className='flex space-x-2 items-center'>
                             <div>
-                                <img src="https://source.unsplash.com/random" alt="" className='w-10 h-10 rounded-full' />
+                                <img src={currentPost.author?.avatar} alt="" className='w-10 h-10 rounded-full' />
                             </div>
                             <div className="flex space-x-4">
-                                <p>{currentPost.author?.username}</p>
-                                <p>{formatTimeSinceCreation(currentPost.createdAt)}</p>
+                                <p className="text-lg">{currentPost.author?.username}</p>
+                                <p className="text-slate-400">{formatTimeSinceCreation(currentPost.createdAt)}</p>
                             </div>
                         </div>
                         <h3 className='text-2xl'>{currentPost?.title}</h3>
@@ -91,7 +91,7 @@ const PostCard = ({ id }) => {
                         </div>
                     </div>
                     <div className="flex justify-center ">
-                        <img src="https://source.unsplash.com/random" alt="" className='h-full max-h-screen' />
+                        <img src={currentPost.image} alt="" className='h-full max-h-screen' />
                     </div>
                     <div className='flex items-center justify-between mt-2'>
                         <div className="flex space-x-2 items-end">

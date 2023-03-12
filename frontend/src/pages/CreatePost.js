@@ -7,7 +7,9 @@ const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [alltags, setTags] = useState('');
-    const { data} = useContext(UserContext);
+    const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+    const { data } = useContext(UserContext);
     const navigate = useNavigate();
 
     const split_tags = alltags.split(',');
@@ -15,12 +17,20 @@ const CreatePost = () => {
 
     async function submitData(e) {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('image', image);
+        formData.append('tags', tags);
+
+
         if(data.signed_user._id) {
             const author = data.signed_user._id;
-            await axios.post(`${process.env.REACT_APP_API_URL}/post/create`, {title, description, tags,  author})
+            formData.append('author', author)
+            await axios.post(`${process.env.REACT_APP_API_URL}/post/create`, formData)
             .then(res => {
                 if(res.status===200) {
-                    navigate('/home')
+                    navigate('/')
                 }
             })
             .catch(err => console.log(err))
@@ -28,12 +38,18 @@ const CreatePost = () => {
         }
     }
 
+    const handleImage = async (e) => {
+        const file = e.target.files[0]
+        setImagePreview(URL.createObjectURL(file))
+        setImage(file)
+    }
+
 
     return (
         <div className="w-full flex justify-center">
             <div className='w-3/5 flex flex-col bg-slate-700 mt-10 p-3 space-y-3 text-xl'>
                 <form onSubmit={submitData}>
-                    <div className='border-white border-b-2 space-y-4 '>
+                    <div className='border-white border-b-2 space-y-4'>
                         <div>
 
                         </div>
@@ -41,10 +57,16 @@ const CreatePost = () => {
                             <input type="text" placeholder='Title' className='w-full text-xl rounded-md' value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div>
-                            <textarea name="description" id="" cols="30" rows="10" placeholder='Text (optional)' className='w-full text-xl rounded-md' value={description} onChange={(e) => setDescription(e.target.value)} />
+                            <textarea name="description" id="" cols="30" rows="3" placeholder='Text (optional)' className='w-full text-xl rounded-md' value={description} onChange={(e) => setDescription(e.target.value)} />
                         </div>
                         <div>
                             <input type="text" placeholder='Finance, Memes' className='rounded-md mb-4' value={alltags} onChange={(e) => setTags(e.target.value)} />
+                        </div>
+                        <div>
+                            <input className='text-white' type="file" accept='image/*' name="file" id="file" onChange={(e)=>handleImage(e)}/>
+                        </div>
+                        <div className='mb-4'>
+                            {imagePreview && <img src={imagePreview} alt="" className='h-screen w-min'/>}
                         </div>
                     </div>
                     <div className='w-full flex justify-end my-4 space-x-4'>
