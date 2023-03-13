@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../middlewares/User-state'
 import { FaSearch } from 'react-icons/fa'
+import {MdOutlineArrowDropDown} from 'react-icons/md'
 
 const Navbar = () => {
     const { data } = useContext(UserContext)
@@ -25,7 +26,7 @@ const Navbar = () => {
                 </label>
             </div>
             {data.isLoggedIn ?
-                <div className="">
+                <div className="cursor-pointer">
                     <div className="flex space-x-2">
                         <div className="">
                             <img src={data.signed_user.avatar} alt="" className='w-10 h-10 rounded-full' />
@@ -34,6 +35,9 @@ const Navbar = () => {
                         <div>
                             <h6>{data.signed_user.name}</h6>
                             <h6>{data.signed_user.username}</h6>
+                        </div>
+                        <div className="flex items-center text-3xl">
+                            <MdOutlineArrowDropDown/>
                         </div>
                     </div>
                 </div> :

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../middlewares/User-state'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'
 import { formatTimeSinceCreation } from '../../middlewares/User-state'
@@ -93,7 +94,7 @@ const PostCard = ({ id }) => {
                     <div className="flex justify-center ">
                         <img src={currentPost.image} alt="" className='h-full max-h-screen' />
                     </div>
-                    <div className='flex items-center justify-between mt-2'>
+                    <div className='flex items-center justify-between my-2 border-b-2 '>
                         <div className="flex space-x-2 items-end">
                             <p>{currentPost.comments?.length} Comments</p>
                         </div>
@@ -101,7 +102,14 @@ const PostCard = ({ id }) => {
                     {data.isLoggedIn?
                         <div className="my-2 text-black">
                             <input className='w-full' type="text" placeholder='What are your thoughts?' value={commentData} onChange={(e) => setCommentData(e.target.value)} onKeyDown={(e) => submitComment(e)} />
-                        </div>:""
+                        </div>:
+                        <Link to='/login'>
+                            <div className='w-max py-1 px-2 rounded-lg space-x-3 text-lg bg-white'>
+                                <input className='form-input focus:ring-0 border-none text-black' type="text" placeholder='Log in or sign up to leave a comment' />
+                                <button className='bg-transparent text-black border-2 border-slate-500 px-4 rounded-full'>Log in</button>
+                                <button className='bg-transparent text-black border-2 border-slate-500 px-4 rounded-full'>Sign up</button>
+                            </div>
+                        </Link>
                     }
                         {currentPost.comments?.map((comment) => {
                             return <Comment key={comment._id} comment={comment}/>

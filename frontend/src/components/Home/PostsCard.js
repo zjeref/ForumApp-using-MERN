@@ -47,7 +47,7 @@ const PostsCard = ({ post }) => {
             </div>
             <div className="flex space-x-3 bg-slate-700 rounded-xl w-full pr-4 my-3" onClick={() => navigate(`/post/${currentPost?._id}`)}>
                 <div className="flex ">
-                    <img src={currentPost.image} alt="" className='w-40 rounded-l-xl' />
+                    {currentPost.image && <img src={currentPost.image} alt="" className='w-40 rounded-l-xl' />}
                 </div>
                 <div className="flex flex-col justify-between py-2 w-full">
                     <div className="space-y-3 mb-2">
