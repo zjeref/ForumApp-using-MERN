@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export const UserContext = createContext();
 
@@ -23,11 +23,14 @@ export const reducer = (state, action) => {
                 isLoggedIn: action.payload
             }
         }
+
+
         default: {
             return
         }
     }
 }
+
 
 export function formatTimeSinceCreation(createdAt) {
     const now = new Date();

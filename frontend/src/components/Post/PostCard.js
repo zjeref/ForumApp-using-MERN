@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../middlewares/User-state'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'
 import { formatTimeSinceCreation } from '../../middlewares/User-state'
 
 import Comment from './Comment'
 
-const PostCard = ({ id }) => {
+const PostCard = ({id}) => {
+
     const { data } = useContext(UserContext);
     const [currentPost, setCurrentPost] = useState({});
     const [commentData, setCommentData] = useState('');
@@ -79,8 +80,12 @@ const PostCard = ({ id }) => {
                             <div>
                                 <img src={currentPost.author?.avatar} alt="" className='w-10 h-10 rounded-full' />
                             </div>
-                            <div className="flex space-x-4">
-                                <p className="text-lg">{currentPost.author?.username}</p>
+                            <div className="hover:underline hover:text-blue-400">
+                                <Link to={`/user/${currentPost.author?._id}`}>
+                                    <p className="text-lg">{currentPost.author?.username}</p>
+                                </Link>
+                            </div>
+                            <div>
                                 <p className="text-slate-400">{formatTimeSinceCreation(currentPost.createdAt)}</p>
                             </div>
                         </div>
@@ -99,10 +104,10 @@ const PostCard = ({ id }) => {
                             <p>{currentPost.comments?.length} Comments</p>
                         </div>
                     </div>
-                    {data.isLoggedIn?
+                    {data.isLoggedIn ?
                         <div className="my-2 text-black">
                             <input className='w-full' type="text" placeholder='What are your thoughts?' value={commentData} onChange={(e) => setCommentData(e.target.value)} onKeyDown={(e) => submitComment(e)} />
-                        </div>:
+                        </div> :
                         <Link to='/login'>
                             <div className='w-max py-1 px-2 rounded-lg space-x-3 text-lg bg-white'>
                                 <input className='form-input focus:ring-0 border-none text-black' type="text" placeholder='Log in or sign up to leave a comment' />
@@ -111,9 +116,9 @@ const PostCard = ({ id }) => {
                             </div>
                         </Link>
                     }
-                        {currentPost.comments?.map((comment) => {
-                            return <Comment key={comment._id} comment={comment}/>
-                        })}
+                    {currentPost.comments?.map((comment) => {
+                        return <Comment key={comment._id} comment={comment} />
+                    })}
                 </div>
             </div>
         </div>

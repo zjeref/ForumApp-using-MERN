@@ -24,9 +24,9 @@ exports.createPost = asyncHandler(async (req, res) => {
     };
 
     const headers = {
-        Authorization: `Client-ID ${process.env.IMGUR_ID}` 
+        Authorization: `Client-ID ${process.env.IMGUR_ID}`
     }
-    
+
     try {
         const res = await axios.post('https://api.imgur.com/3/image', body, { headers });
         imageUrl = res.data.data.link
@@ -125,6 +125,8 @@ exports.downvote = asyncHandler(async (req, res) => {
 exports.fetchPostbyAuthor = asyncHandler(async (req, res) => {
     const author = req.params.id;
     const userPosts = await Post.find({ author: author })
+        .sort({ updatedAt: -1 })
+        .populate(['author', 'comments'])
     res.status(200).json(userPosts)
 })
 

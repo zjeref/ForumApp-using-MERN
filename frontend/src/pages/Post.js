@@ -10,14 +10,6 @@ import PostCard from '../components/Post/PostCard';
 
 const Post = () => {
     const params = useParams();
-    const { dispatch } = useContext(UserContext);
-
-
-    const logout = () => {
-        dispatch({ type: 'login_status', payload: false })
-        dispatch({ type: 'set_user', payload: {} })
-        Cookies.remove('authToken')
-    }
 
     return (
         <div className="w-full text-white">
@@ -29,7 +21,6 @@ const Post = () => {
                     <div className="w-2/6 flex flex-col space-y-4">
                         <CreateCommunity />
                         <Footer />
-                        <button className='bg-slate-700 py-2 px-3 rounded-full cursor-pointer' onClick={logout}>Logout</button>
                     </div>
                 </div>
             </div>

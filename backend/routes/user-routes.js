@@ -1,8 +1,8 @@
 const express = require('express');
 const Router = express.Router();
 const multer = require('multer');
-const {userAuth} = require('../middlewares/userAuth');
-const {createAccount, verifyAccount, getAccount, getMe} = require('../controller/user-controller');
+const { userAuth } = require('../middlewares/userAuth');
+const { createAccount, verifyAccount, getAccount, getMe } = require('../controller/user-controller');
 const upload = multer();
 
 Router.post('/create', upload.single('avatar'), createAccount)

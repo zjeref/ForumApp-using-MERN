@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../middlewares/User-state'
-import Cookies from 'js-cookie'
 import axios from 'axios'
 
 import PostsCard from '../components/Home/PostsCard'
@@ -12,11 +11,6 @@ const Home = () => {
     const { data, dispatch } = useContext(UserContext);
     const [posts, setPosts] = useState([])
 
-    const logout = () => {
-        dispatch({ type: 'login_status', payload: false })
-        dispatch({ type: 'set_user', payload: {} })
-        Cookies.remove('authToken')
-    }
 
     useEffect(() => {
         async function fetchData() {
@@ -42,7 +36,6 @@ const Home = () => {
                     <div className="w-2/6 flex flex-col space-y-4">
                         <CreateCommunity />
                         <Footer />
-                        <button className='bg-slate-700 py-2 px-3 rounded-full cursor-pointer' onClick={logout}>Loggout</button>
                     </div>
                 </div>
             </div>

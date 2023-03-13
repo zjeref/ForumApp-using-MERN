@@ -75,8 +75,8 @@ exports.verifyAccount = asyncHandler(async (req, res) => {
 })
 
 exports.getAccount = asyncHandler(async (req, res) => {
-    const id = req.params.id;
-    const user = await User.findOne({ _id: id }).select('-password');
+    const {id }= req.params;
+    const user = await User.findById(id).select('-password');
     if (!user) return res.status(404).json({ message: "User does not exist" })
 
     res.status(200).json(user);

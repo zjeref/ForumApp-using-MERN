@@ -12,6 +12,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import CreatePost from './pages/CreatePost'
 import Post from './pages/Post'
+import User from './pages/User'
 
 
 
@@ -34,6 +35,7 @@ function App() {
           <Route path='/' element={<SemiProtected Component={Home}/>} />
           <Route path='/create' element={<Protected Component={CreatePost} />} />
           <Route path='/post/:id' element={<SemiProtected Component={Post}/>} />
+          <Route path='/user/:id' element={<SemiProtected Component={User}/>} />
         </Routes>
 
       </UserContext.Provider>
