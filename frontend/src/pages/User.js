@@ -31,12 +31,13 @@ const User = () => {
         fetchUser();
         fetchUsersPost();
     }, [id])
-    // console.log(userPost)
+
+    
     return (
         <div className="w-full text-white">
             <div className="w-full flex justify-center ">
-                <div className="w-4/5 flex space-x-7  my-[5vh]">
-                    <div className="w-4/6 flex flex-col items-center">
+                <div className="w-4/5 flex space-x-7  my-[5vh] justify-center">
+                    <div className="max-w-3xl w-4/6 flex flex-col items-center ">
                         <CreatePost />
 
                         {userPost?.map((post) => {
@@ -44,7 +45,7 @@ const User = () => {
                         })}
 
                     </div>
-                    <div className="w-2/6 flex flex-col space-y-4">
+                    <div className="max-w-sm w-2/6 flex flex-col space-y-4">
                         <UserDetail user={userProfile} post={userPost} />
                         <Footer />
                     </div>

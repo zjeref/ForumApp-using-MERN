@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { UserContext } from '../../middlewares/User-state'
 import axios from 'axios'
 
@@ -10,37 +10,28 @@ const UserDetail = ({ user, post }) => {
 
     const [isFollowing, setIsFollowing] = useState(false);
 
-    let followId
+    const [followId, setFollowId] = useState('') 
 
     useEffect(() => {
         setUserDetail(user)
-        followId = data.signed_user._id;
-    }, [user])
-
-    useEffect(() => {
-        if (userDetail) {
-            console.log("ssshere")
-            if (userDetail.followers && userDetail.followers.includes(followId)) {
-                setIsFollowing(true);
-                console.log("here")
-            } else {
-                setIsFollowing(false);
-
-            }
-
+        setFollowId(data.signed_user._id)
+        if (userDetail && userDetail.followers && userDetail.followers.includes(followId)) {
+            setIsFollowing(true);
+        } else {
+            setIsFollowing(false);
         }
-
-    }, [userDetail]);
-    console.log(userDetail)
+    }, [user, data, userDetail])
 
     const updateFollow = async (action) => {
-
-        await axios.put(`${process.env.REACT_APP_API_URL}/follow/${userDetail._id}/${action}`, { followId })
-            .then(res => {
-                setUserDetail(res.data)
-            })
-            .catch(err => console.error(err))
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/follow/${userDetail._id}/${action}`, { followId });
+            setUserDetail(res.data);
+            setIsFollowing(res.data.followers.includes(followId));
+        } catch (error) {
+            console.error(error);
+        }
     }
+
 
 
     const convertDate = (date) => {
@@ -54,7 +45,7 @@ const UserDetail = ({ user, post }) => {
     }
 
     return (
-        <div className="w-full bg-slate-700 rounded-md ">
+        <div className="bg-slate-700 rounded-md ">
             <div className="w-full h-20 bg-blue-500">
             </div>
             <div className="p-4 space-y-4">
@@ -87,7 +78,7 @@ const UserDetail = ({ user, post }) => {
                     </div>
                 </div>
                 <div className='text-center'>
-                    <button className='sideBtn w-full bg-white text-slate-800' onClick={(e) => updateFollow(e.target.value.toLowerCase())}>
+                    <button className='sideBtn w-full bg-white text-slate-800' onClick={(e) => updateFollow(e.target.innerText.toLowerCase())}>
                         {isFollowing ? "Unfollow" : "Follow"}
                     </button>
                 </div>

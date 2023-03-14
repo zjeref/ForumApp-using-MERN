@@ -30,3 +30,16 @@ exports.unfollow = asyncHandler(async (req, res) => {
     const updateFollowing = await User.findByIdAndUpdate(followId, { $pull: { followings: id } }, { new: true })
     res.status(200).json(updateFollower)
 })
+
+exports.isFollowing = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const { followId } = req.body;
+
+    const user = await User.findById(id);
+    if (user.followers.includes(followId)) {
+        return res.status(200).json({ message: 'true' });
+    } else {
+        return res.status(200).json({ message: 'false' });
+    }
+
+})

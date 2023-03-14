@@ -40,7 +40,7 @@ const Navbar = () => {
 
                         <div>
                             <h6>{data.signed_user.name}</h6>
-                            <h6 className="text-slate-500">{data.signed_user.username}</h6>
+                            <h6 className="text-slate-400">{data.signed_user.username}</h6>
                         </div>
                         <div className="flex items-center text-3xl">
                             <MdOutlineArrowDropDown />
