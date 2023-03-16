@@ -47,7 +47,7 @@ const CreatePost = () => {
 
     return (
         <div className="w-full flex justify-center">
-            <div className='w-3/5 flex flex-col bg-slate-700 mt-10 p-3 space-y-3 text-xl'>
+            <div className='max-w-3xl w-10/12 md:w-3/5 flex flex-col bg-slate-700 mt-10 p-3 space-y-3 text-xl'>
                 <form onSubmit={submitData}>
                     <div className='border-white border-b-2 space-y-4'>
                         <div>

@@ -13,11 +13,11 @@ const Navbar = () => {
 
 
     return (
-        <div className="flex w-full justify-between py-[2vh] px-[3vw] bg-slate-700 text-white relative">
-            <div className="flex space-x-2">
-                {/* <div className="">
-                    <img src="https://source.unsplash.com/random" alt="" className='w-10 h-10 rounded-full' />
-                </div> */}
+        <div className="sm:flex w-full justify-between py-[2vh] px-[3vw] bg-slate-700 text-white relative space-y-4 sm:space-y-0">
+            <div className="flex  space-x-2">
+                <div className="">
+                    <img src="https://i.imgur.com/ij4XprK.jpeg" alt="" className='w-10 h-10 rounded-full' />
+                </div>
                 <div className="text-3xl">
                     <Link to="/">
                         <span>Forum</span>
@@ -26,7 +26,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div>
-                <label className="flex items-center space-x-4 bg-white text-slate-600 px-4 py-1 rounded-lg" htmlFor="search">
+                <label className="flex max-w-sm items-center space-x-4 bg-white text-slate-600 px-4 py-1 rounded-lg" htmlFor="search">
                     <FaSearch style={{ fontSize: "1.8rem" }} />
                     <input className='input-form border-none text-xl focus:ring-0' type="text" id='search' placeholder='Search Forum' />
                 </label>

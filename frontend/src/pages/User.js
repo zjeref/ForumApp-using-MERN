@@ -32,12 +32,12 @@ const User = () => {
         fetchUsersPost();
     }, [id])
 
-    
+
     return (
         <div className="w-full text-white">
             <div className="w-full flex justify-center ">
-                <div className="w-4/5 flex space-x-7  my-[5vh] justify-center">
-                    <div className="max-w-3xl w-4/6 flex flex-col items-center ">
+                <div className="w-full md:w-4/5 flex flex-col-reverse md:flex-row items-center md:items-start space-x-7  my-[5vh] justify-center ">
+                    <div className="w-5/6 md:max-w-3xl md:w-4/6 flex flex-col  items-center">
                         <CreatePost />
 
                         {userPost?.map((post) => {
@@ -45,9 +45,11 @@ const User = () => {
                         })}
 
                     </div>
-                    <div className="max-w-sm w-2/6 flex flex-col space-y-4">
+                    <div className="w-4/6 max-w-sm min-w-[] md:w-2/6 flex flex-col space-y-4 justify-center mb-[5vh]">
                         <UserDetail user={userProfile} post={userPost} />
-                        <Footer />
+                        <div className='sr-only md:not-sr-only'>
+                            <Footer />
+                        </div>
                     </div>
                 </div>
             </div>
