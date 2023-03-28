@@ -6,10 +6,11 @@ import PostsCard from '../components/Home/PostsCard'
 import CreatePost from '../components/Home/CreatePost'
 import Footer from '../components/Footer'
 import CreateCommunity from '../components/Home/CreateCommunity'
+import Loading from '../components/loading'
 
 const Home = () => {
     const { data, dispatch } = useContext(UserContext);
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState(null)
 
 
     useEffect(() => {
@@ -27,10 +28,12 @@ const Home = () => {
             <div className="w-full md:w-4/5 flex flex-col-reverse md:flex-row items-center md:items-start space-x-7  my-[5vh] justify-center ">
                     <div className="w-5/6 md:max-w-3xl md:w-4/6 flex flex-col  items-center">
                         <CreatePost />
-
-                        {posts.map((post) => {
-                            return <PostsCard key={post?._id} post={post} />
-                        })}
+                        {posts ?
+                            posts.map((post) => {
+                                return <PostsCard key={post?._id} post={post} />
+                            })
+                            :<Loading/>
+                        }
 
                     </div>
                     <div className="w-5/6 max-w-xl md:max-w-sm min-w-[] md:w-2/6 flex flex-col space-y-4 justify-center mb-[5vh]">

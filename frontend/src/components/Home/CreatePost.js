@@ -12,7 +12,7 @@ const CreatePost = () => {
 
     return (
         
-        <div className="flex space-x-3 items-center w-full bg-white border-2 border-primary dark:bg-slate-700 px-4 py-1 rounded-md mb-5" onClick={switchPage}>
+        <div className="flex space-x-3 items-center w-full bg-white border-2 border-primary dark:bg-slate-700 px-4 py-1 rounded-md mb-5 shadow-lg" onClick={switchPage}>
             
             <div className="w-1/12">
                 <img src="https://i.imgur.com/ij4XprK.jpeg" alt="" className='w-10 h-10 rounded-full min-w-fit' />
