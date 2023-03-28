@@ -16,14 +16,14 @@ const UserSetting = () => {
   }
 
   return (
-    <div className='w-max absolute bg-slate-600 sm:right-[3vw] border-2 border-slate-800 select-none'>
+    <div className='w-max absolute bg-white dark:bg-slate-600 sm:right-[3vw] border-2 border-primary select-none'>
       <Link>
-        <div className="flex items-center space-x-3 text-xl px-2 py-2 hover:bg-slate-700 ">
+        <div className="flex items-center space-x-3 px-2 py-2 hover:bg-semilight hover:dark:bg-slate-700 ">
           <div><FiSettings /></div>
           <p>Account settings</p>
         </div>
       </Link>
-      <div className="flex items-center space-x-3 text-xl px-2 py-2 hover:bg-slate-700 " onClick={logout}>
+      <div className="flex items-center space-x-3 px-2 py-2 hover:bg-semilight hover:dark:bg-slate-700 " onClick={logout}>
         <div><MdOutlineLogout /></div>
         <p>Logout</p>
       </div>

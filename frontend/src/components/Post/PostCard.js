@@ -63,22 +63,22 @@ const PostCard = ({id}) => {
     return (
 
         <div className="post-card flex w-full">
-            <div className="flex flex-col items-center mr-2 text-6xl select-none">
+            <div className="flex flex-col items-center mr-2 text-5xl select-none">
                 <div className=" cursor-pointer hover:text-slate-400 -m-4" onClick={() => updateVotes("upvote")}>
                     <MdArrowDropUp />
                 </div>
-                <p className="text-xl">{currentPost?.votes}</p>
+                <p className="text-lg">{currentPost?.votes}</p>
                 <div className="cursor-pointer hover:text-slate-400 -m-4" onClick={() => updateVotes("downvote")}>
                     <MdArrowDropDown />
                 </div>
             </div>
-            <div className="flex flex-col space-x-3 bg-slate-700  w-full px-4">
+            <div className="flex flex-col space-x-3 bg-white dark:bg-slate-700  w-full px-4 shadow-lg">
                 <div className="flex flex-col justify-between py-2 w-full">
-
-                    <div className="space-y-3 mb-2">
-                        <div className='flex space-x-2 items-center'>
+ 
+                    <div className=" mb-2">
+                        <div className='flex space-x-2 items-center mb-2'>
                             <div>
-                                <img src={currentPost.author?.avatar} alt="" className='w-10 h-10 rounded-full' />
+                                <img src={currentPost.author?.avatar} alt="" className='w-8 h-8 rounded-full' />
                             </div>
                             <div className="hover:underline hover:text-blue-400">
                                 <Link to={`/user/${currentPost.author?._id}`}>
@@ -86,10 +86,10 @@ const PostCard = ({id}) => {
                                 </Link>
                             </div>
                             <div>
-                                <p className="text-slate-400">{formatTimeSinceCreation(currentPost.createdAt)}</p>
+                                <p className="text-slate-400 text-sm">{formatTimeSinceCreation(currentPost.createdAt)}</p>
                             </div>
                         </div>
-                        <h3 className='text-2xl'>{currentPost?.title}</h3>
+                        <h3 className='text-xl font-semibold'>{currentPost?.title}</h3>
                         <div className='space-x-2'>
                             {currentPost.tags?.map((tag) => {
                                 return <span key={tag} className='tag'>{tag}</span>
@@ -111,7 +111,7 @@ const PostCard = ({id}) => {
                         <Link to='/login'>
                             <div className='w-max py-1 px-2 rounded-lg space-x-3 text-lg bg-white'>
                                 <input className='form-input focus:ring-0 border-none text-black' type="text" placeholder='Log in or sign up to leave a comment' />
-                                <button className='bg-transparent text-black border-2 border-slate-500 px-4 rounded-full'>Log in</button>
+                                <button className='bg-transparent dark:text-black border-2 border-slate-500 px-4 rounded-full'>Log in</button>
                                 <button className='bg-transparent text-black border-2 border-slate-500 px-4 rounded-full'>Sign up</button>
                             </div>
                         </Link>

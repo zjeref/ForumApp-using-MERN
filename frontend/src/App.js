@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useReducer } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { UserContext, initialState, reducer } from './middlewares/User-state'
@@ -32,10 +32,10 @@ function App() {
           <Route path="/register" element={<Landing />}>
             <Route path='' element={<Register />} />
           </Route>
-          <Route path='/' element={<SemiProtected Component={Home}/>} />
+          <Route path='/' element={<SemiProtected Component={Home} />} />
           <Route path='/create' element={<Protected Component={CreatePost} />} />
-          <Route path='/post/:id' element={<SemiProtected Component={Post}/>} />
-          <Route path='/user/:id' element={<SemiProtected Component={User}/>} />
+          <Route path='/post/:id' element={<SemiProtected Component={Post} />} />
+          <Route path='/user/:id' element={<SemiProtected Component={User} />} />
         </Routes>
 
       </UserContext.Provider>

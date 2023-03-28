@@ -22,7 +22,7 @@ const Home = () => {
     }, [data])
 
     return (
-        <div className="w-full text-white">
+        <div className="w-full dark:text-white">
             <div className="w-full flex justify-center ">
             <div className="w-full md:w-4/5 flex flex-col-reverse md:flex-row items-center md:items-start space-x-7  my-[5vh] justify-center ">
                     <div className="w-5/6 md:max-w-3xl md:w-4/6 flex flex-col  items-center">

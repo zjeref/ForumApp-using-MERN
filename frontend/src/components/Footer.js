@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div className='flex flex-col text-lg bg-slate-700 p-4 rounded-md'>
+        <div className='flex flex-col text-xs bg-white shadow-lg dark:bg-slate-700 p-4 rounded-lg'>
             <div className='grid grid-cols-2 gap-2 justify-between border-b-2 py-2 px-1'>
                 <p className='cursor-pointer'>User Agreement</p>
                 <p className='cursor-pointer'>Content Policy</p>

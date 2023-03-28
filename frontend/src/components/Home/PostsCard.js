@@ -35,40 +35,40 @@ const PostsCard = ({ post }) => {
 
 
     return (
-        <div className="post-card flex w-full">
-            <div className="flex flex-col justify-center items-center mr-2 text-6xl select-none">
-                <div className=" cursor-pointer hover:text-slate-400 -m-4" onClick={() => updateVotes("upvote")}>
+        <div className="post-card flex w-full dark:text-white">
+            <div className="flex flex-col justify-center items-center mr-2 text-5xl select-none">
+                <div className=" cursor-pointer hover:text-primary dark:hover:text-slate-400 -m-4" onClick={() => updateVotes("upvote")}>
                     <MdArrowDropUp />
                 </div>
-                <p className="text-xl">{currentPost?.votes}</p>
-                <div className="cursor-pointer hover:text-slate-400 -m-4" onClick={() => updateVotes("downvote")}>
+                <p className="text-lg">{currentPost?.votes}</p>
+                <div className="cursor-pointer hover:text-primary dark:hover:text-slate-400 -m-4" onClick={() => updateVotes("downvote")}>
                     <MdArrowDropDown />
                 </div>
             </div>
-            <div className="flex space-x-3 bg-slate-700 rounded-xl w-full pr-4 my-3" onClick={() => navigate(`/post/${currentPost?._id}`)}>
+            <div className="flex space-x-3 shadow-lg bg-white dark:bg-slate-700 rounded-xl w-full pr-4 my-3 cursor-pointer" onClick={() => navigate(`/post/${currentPost?._id}`)}>
                 <div className="flex ">
-                    {currentPost.image && <img src={currentPost.image} alt="" className='w-40 rounded-l-xl' />}
+                    {currentPost.image && <img src={currentPost.image} alt="" className='w-40 rounded-l-xl border-r-2' />}
                 </div>
                 <div className="flex flex-col justify-between py-2 w-full">
-                    <div className="space-y-3 mb-2">
-                        <h3 className='text-2xl'>{currentPost?.title}</h3>
+                    <div className="mb-2">
+                        <h3 className='text-lg font-semibold'>{currentPost?.title}</h3>
                         <div className='space-x-2'>
-                            {currentPost.tags?.map((tag) => {
+                            {currentPost.tags.length>0 && currentPost.tags?.map((tag) => {
                                 return <span key={tag} className='tag'>{tag}</span>
                             })}
                         </div>
                     </div>
-                    <div className='flex items-center justify-between mt-2'>
+                    <div className='flex items-end justify-between mt-2'>
                         <div className='flex space-x-2 items-center'>
                             <div>
-                                <img src={currentPost.author?.avatar} alt="" className='w-10 h-10 rounded-full' />
+                                <img src={currentPost.author?.avatar} alt="" className='w-8 h-8 rounded-full' />
                             </div>
                             <div>
-                                <p>{currentPost.author?.username}</p>
-                                <p>{formatTimeSinceCreation(currentPost?.createdAt)}</p>
+                                <p className=''>{currentPost.author?.username}</p>
+                                <p className='text-slate-600 dark:text-slate-400 text-sm'>{formatTimeSinceCreation(currentPost?.createdAt)}</p>
                             </div>
                         </div>
-                        <div className="flex space-x-2 items-end">
+                        <div className="flex space-x-2 items-end text-sm">
                             <p>{currentPost.comments?.length} Comments</p>
                         </div>
                     </div>

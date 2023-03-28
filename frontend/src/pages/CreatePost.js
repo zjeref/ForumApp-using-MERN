@@ -47,30 +47,30 @@ const CreatePost = () => {
 
     return (
         <div className="w-full flex justify-center">
-            <div className='max-w-3xl w-10/12 md:w-3/5 flex flex-col bg-slate-700 mt-10 p-3 space-y-3 text-xl'>
+            <div className='max-w-3xl w-10/12 md:w-3/5 flex flex-col bg-white dark:bg-slate-700 mt-10 p-3 space-y-3 shadow-lg'>
                 <form onSubmit={submitData}>
                     <div className='border-white border-b-2 space-y-4'>
                         <div>
 
                         </div>
                         <div className='w-full'>
-                            <input type="text" placeholder='Title' className='w-full text-xl rounded-md' value={title} onChange={(e) => setTitle(e.target.value)} />
+                            <input type="text" placeholder='Title' className='w-full rounded-md' value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div>
-                            <textarea name="description" id="" cols="30" rows="3" placeholder='Text (optional)' className='w-full text-xl rounded-md' value={description} onChange={(e) => setDescription(e.target.value)} />
+                            <textarea name="description" id="" cols="30" rows="3" placeholder='Text (optional)' className='w-full rounded-md' value={description} onChange={(e) => setDescription(e.target.value)} />
                         </div>
                         <div>
                             <input type="text" placeholder='Finance, Memes' className='rounded-md mb-4' value={alltags} onChange={(e) => setTags(e.target.value)} />
                         </div>
-                        <div>
-                            <input className='text-white' type="file" accept='image/*' name="file" id="file" onChange={(e)=>handleImage(e)}/>
+                        <div className=''>
+                            <input className='text-white ' type="file" accept='image/*' name="file" id="file" onChange={(e)=>handleImage(e)}/>
                         </div>
                         <div className='mb-4'>
                             {imagePreview && <img src={imagePreview} alt="" className='h-screen w-min'/>}
                         </div>
                     </div>
                     <div className='w-full flex justify-end my-4 space-x-4'>
-                        <button className='createPostBtn border-white text-slate-400 hover:bg-slate-600'>Save Draft</button>
+                        <button className='createPostBtn dark:border-white text-slate-400 hover:bg-slate-600'>Save Draft</button>
                         <button type='submit' className='createPostBtn bg-white hover:bg-slate-200'>Post</button>
                     </div>
                 </form>

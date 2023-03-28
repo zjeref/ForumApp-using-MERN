@@ -45,13 +45,13 @@ const UserDetail = ({ user, post }) => {
     }
 
     return (
-        <div className="bg-slate-700 rounded-md ">
-            <div className="w-full h-20 bg-blue-500">
+        <div className="bg-white dark:bg-slate-700 rounded-md shadow-lg">
+            <div className="w-full h-20 bg-primary">
             </div>
             <div className="p-4 space-y-4">
 
                 <div className="p-6 -mt-20" >
-                    <img className="rounded-3xl" src={userDetail?.avatar} alt="" />
+                    <img className="rounded-xl" src={userDetail?.avatar} alt="" />
                 </div>
                 <div className="text-center text-xl">
                     <p>{userDetail?.name}</p>
@@ -60,25 +60,25 @@ const UserDetail = ({ user, post }) => {
                 <div className="w-full flex justify-between p-[3%]">
                     <div className="text-center  w-1/2">
                         <p>Posts</p>
-                        <p className="text-slate-400">{post?.length}</p>
+                        <p className="text-slate-600 dark:text-slate-400">{post?.length}</p>
                     </div>
                     <div className="text-center  w-1/2">
                         <p>Cake Day</p>
-                        <p className="text-slate-400">{convertDate(userDetail?.createdAt)}</p>
+                        <p className="text-slate-600 dark:text-slate-400">{convertDate(userDetail?.createdAt)}</p>
                     </div>
                 </div>
                 <div className="w-full flex justify-between p-[3%]">
                     <div className="text-center w-1/2">
                         <p>Followers</p>
-                        <p className="text-slate-400">{userDetail?.followers?.length}</p>
+                        <p className="text-slate-600 dark:text-slate-400">{userDetail?.followers?.length}</p>
                     </div>
                     <div className="text-center  w-1/2">
                         <p>Following</p>
-                        <p className="text-slate-400">{userDetail?.followings?.length}</p>
+                        <p className="text-slate-600 dark:text-slate-400">{userDetail?.followings?.length}</p>
                     </div>
                 </div>
                 <div className='text-center'>
-                    <button className='sideBtn w-full bg-white text-slate-800' onClick={(e) => updateFollow(e.target.innerText.toLowerCase())}>
+                    <button className='sideBtn w-full bg-white hover:bg-semilight text-slate-800' onClick={(e) => updateFollow(e.target.innerText.toLowerCase())}>
                         {isFollowing ? "Unfollow" : "Follow"}
                     </button>
                 </div>
