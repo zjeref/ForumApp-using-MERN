@@ -10,8 +10,8 @@ import UserDetail from '../components/Home/UserDetail'
 const User = () => {
     const params = useParams();
     const id = params.id;
-    const [userProfile, setuserProfile] = useState();
-    const [userPost, setUserPost] = useState();
+    const [userProfile, setuserProfile] = useState(null);
+    const [userPost, setUserPost] = useState(null);
 
     useEffect(() => {
         async function fetchUser() {
@@ -36,16 +36,17 @@ const User = () => {
     return (
         <div className="w-full dark:text-white">
             <div className="w-full flex justify-center ">
-                <div className="w-full md:w-4/5 flex flex-col-reverse md:flex-row items-center md:items-start space-x-7  my-[5vh] justify-center ">
+                <div className="w-full md:w-4/5 flex flex-col-reverse md:flex-row items-center md:items-start md:space-x-7  my-[5vh] justify-center ">
                     <div className="w-5/6 md:max-w-3xl md:w-4/6 flex flex-col  items-center">
-                        <CreatePost />
-
-                        {userPost?.map((post) => {
+                        <div className="w-full text-center text-xl bg-primary text-white">
+                            {userProfile && <h3 className="font-semibold py-2">{userProfile?.name}'s posts</h3>}
+                        </div>
+                        {userPost && userPost.map((post) => {
                             return <PostsCard key={post?._id} post={post} />
                         })}
 
                     </div>
-                    <div className="w-4/6 max-w-sm min-w-[] md:w-2/6 flex flex-col space-y-4 justify-center mb-[5vh]">
+                    <div className="w-5/6 md:max-w-sm md:w-2/6 flex flex-col space-y-4 justify-center mb-[5vh]">
                         <UserDetail user={userProfile} post={userPost} />
                         <div className='sr-only md:not-sr-only'>
                             <Footer />

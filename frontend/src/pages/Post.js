@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../middlewares/User-state';
-import Cookies from 'js-cookie'
+import React from 'react'
+
 import { useParams } from 'react-router-dom'
 
 
@@ -14,11 +13,11 @@ const Post = () => {
     return (
         <div className="w-full dark:text-white">
             <div className="w-full flex justify-center ">
-                <div className="w-full md:w-4/5 flex flex-col-reverse md:flex-row items-center md:items-start space-x-7  my-[5vh] justify-center ">
+                <div className="w-full md:w-4/5 flex flex-col md:flex-row items-center md:items-start md:space-x-7 space-y-4 md:space-y-0  my-[5vh] justify-center ">
                     <div className="w-5/6 md:max-w-3xl md:w-4/6 flex flex-col  items-center">
                         <PostCard id={params.id} />
                     </div>
-                    <div className="w-5/6 max-w-sm min-w-[] md:w-2/6 flex flex-col space-y-4 justify-center mb-[5vh]">
+                    <div className="w-5/6 md:max-w-sm md:w-2/6 flex flex-col space-y-4 justify-center mb-[5vh] px-2">
                         <CreateCommunity />
                         <div className='sr-only md:not-sr-only'>
                             <Footer />

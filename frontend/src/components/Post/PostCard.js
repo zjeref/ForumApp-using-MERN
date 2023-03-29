@@ -6,7 +6,7 @@ import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'
 import { formatTimeSinceCreation } from '../../middlewares/User-state'
 
 import Comment from './Comment'
-import Loading from '../../components/loading'
+import Loading from '../Loading'
 
 const PostCard = ({ id }) => {
 
@@ -79,7 +79,9 @@ const PostCard = ({ id }) => {
                         <div className=" mb-2">
                             <div className='flex space-x-2 items-center mb-2'>
                                 <div>
-                                    <img src={currentPost.author?.avatar} alt="" className='w-8 h-8 rounded-full' />
+                                    <Link to={`/user/${currentPost.author._id}`}>
+                                        <img src={currentPost.author?.avatar} alt="" className='w-8 h-8 rounded-full' />
+                                    </Link>
                                 </div>
                                 <div className="hover:underline hover:text-blue-400">
                                     <Link to={`/user/${currentPost.author._id}`}>
@@ -91,8 +93,12 @@ const PostCard = ({ id }) => {
                                 </div>
                             </div>
                             <h3 className='text-xl font-semibold'>{currentPost.title}</h3>
+                            <p className="text-sm break-all">{currentPost.description}</p>
                             <div className='space-x-2'>
                                 {currentPost.tags?.map((tag) => {
+                                    if (tag === "") {
+                                        return
+                                    }
                                     return <span key={tag} className='tag'>{tag}</span>
                                 })}
                             </div>

@@ -16,7 +16,7 @@ const UserSetting = () => {
   }
 
   return (
-    <div className='w-max absolute bg-white dark:bg-slate-600 sm:right-[3vw] border-2 border-primary select-none'>
+    <div className='w-max absolute bg-white dark:bg-slate-600  border-2 border-primary select-none'>
       <Link>
         <div className="flex items-center space-x-3 px-2 py-2 hover:bg-semilight hover:dark:bg-slate-700 ">
           <div><FiSettings /></div>

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { UserContext } from '../../middlewares/User-state'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -47,7 +46,7 @@ const Register = () => {
     }
 
     function checkValidEmail(email) {
-        const pattern = "^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"; 
+        const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
         if(email.match(pattern)) {
             setvalidemail(true);
             setemail(email);
@@ -57,31 +56,32 @@ const Register = () => {
 
     }
 
+
     return (
         <div className="flex flex-col p-2 space-y-3 my-[3vh]">
             <form onSubmit={submitForm} className="form space-y-3">
                 <div className="space-y-2">
                     <label className='flex flex-col' htmlFor="name">
-                        <span className="text-xl ">Name</span>
-                        <input className="form-input text-black" id="name" type="text" placeholder="Enter Your Name" value={name} onChange={(e) => setname(e.target.value)} />
+                        <span className="text-lg ">Name</span>
+                        <input className="p-1 text-black" id="name" type="text" placeholder="Enter Your Name" value={name} onChange={(e) => setname(e.target.value)} />
                     </label>
                     <label className='flex flex-col' htmlFor="username">
-                        <span className="text-xl ">Username</span>
-                        <input className="form-input text-black" id="username" type="text" placeholder="Enter Your username" value={username} onChange={(e) => setusername(e.target.value)} />
+                        <span className="text-lg ">Username</span>
+                        <input className="p-1 text-black" id="username" type="text" placeholder="Enter Your username" value={username} onChange={(e) => setusername(e.target.value)} />
                     </label>
 
                     <label className='flex flex-col' htmlFor="email">
-                        <span className="text-xl ">Email</span>
-                        <input className="form-input text-black" id="email" type="text" placeholder="Enter Your email" onChange={(e) => checkValidEmail(e.target.value)} />
+                        <span className="text-lg">Email</span>
+                        <input className="p-1 text-black" id="email" type="text" placeholder="Enter Your email" onChange={(e) => checkValidEmail(e.target.value)} />
                         {validEmail === false ? <p className="text-red-500 text-xs">Email is invalid</p>:""}
                     </label>
 
                     <label className='flex flex-col' htmlFor="password">
-                        <span className="text-xl">Password</span>
-                        <input className='form-input  text-black' id='password' type="text" placeholder='Enter your password' value={password} onChange={(e) => setpassword(e.target.value)} />
+                        <span className="text-lg">Password</span>
+                        <input className='p-1  text-black' id='password' type="text" placeholder='Enter your password' value={password} onChange={(e) => setpassword(e.target.value)} />
                     </label>
                     <label className='flex flex-col' htmlFor="img">
-                        <span className="text-xl">Profile image</span>
+                        <span className="text-lg">Profile image</span>
                         <input id='img' type="file" accept='image/*' onChange={(e) => handleFileSelect(e)} />
                     </label>
                     <div className='flex justify-center'>

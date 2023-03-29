@@ -45,15 +45,18 @@ const PostsCard = ({ post }) => {
                     <MdArrowDropDown />
                 </div>
             </div>
-            <div className="flex space-x-3 shadow-lg bg-white dark:bg-slate-700 rounded-xl w-full pr-4 my-3 cursor-pointer" onClick={() => navigate(`/post/${currentPost?._id}`)}>
-                <div className="flex ">
-                    {currentPost.image && <img src={currentPost.image} alt="" className='w-40 rounded-l-xl border-r-2' />}
+            <div className="flex flex-col md:flex-row space-x-3 shadow-lg bg-white dark:bg-slate-700 rounded-xl w-full pr-4 my-3 cursor-pointer" onClick={() => navigate(`/post/${currentPost?._id}`)}>
+                <div className="flex justify-center">
+                    {currentPost.image && <img src={currentPost.image} alt="" className='w-40 md:rounded-l-xl md:border-r-2' />}
                 </div>
                 <div className="flex flex-col justify-between py-2 w-full">
                     <div className="mb-2">
                         <h3 className='text-lg font-semibold'>{currentPost?.title}</h3>
                         <div className='space-x-2'>
-                            {currentPost.tags.length>0 && currentPost.tags?.map((tag) => {
+                            {currentPost.tags?.map((tag) => {
+                                if (tag === "") {
+                                    return
+                                }
                                 return <span key={tag} className='tag'>{tag}</span>
                             })}
                         </div>

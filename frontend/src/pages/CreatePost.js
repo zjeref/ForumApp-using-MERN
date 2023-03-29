@@ -13,28 +13,31 @@ const CreatePost = () => {
     const navigate = useNavigate();
 
     const split_tags = alltags.split(',');
-    const tags =split_tags.map(tag => tag.trim())
+    const tags = split_tags.map(tag => tag.trim())
 
     async function submitData(e) {
         e.preventDefault();
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
-        formData.append('image', image);
-        formData.append('tags', tags);
+        if (image !== '') {
+            formData.append('image', image);
+        }
+        if (!tags[0] !== '') {
+            formData.append('tags', tags);
+        }
 
 
-        if(data.signed_user._id) {
+        if (data.signed_user._id) {
             const author = data.signed_user._id;
             formData.append('author', author)
             await axios.post(`${process.env.REACT_APP_API_URL}/post/create`, formData)
-            .then(res => {
-                if(res.status===200) {
-                    navigate('/')
-                }
-            })
-            .catch(err => console.log(err))
-            
+                .then(res => {
+                    if (res.status === 200) {
+                        navigate('/')
+                    }
+                })
+                .catch(err => console.log(err))
         }
     }
 
@@ -63,10 +66,10 @@ const CreatePost = () => {
                             <input type="text" placeholder='Finance, Memes' className='rounded-md mb-4' value={alltags} onChange={(e) => setTags(e.target.value)} />
                         </div>
                         <div className=''>
-                            <input className='text-white ' type="file" accept='image/*' name="file" id="file" onChange={(e)=>handleImage(e)}/>
+                            <input className='text-white ' type="file" accept='image/*' name="file" id="file" onChange={(e) => handleImage(e)} />
                         </div>
                         <div className='mb-4'>
-                            {imagePreview && <img src={imagePreview} alt="" className='h-screen w-min'/>}
+                            {imagePreview && <img src={imagePreview} alt="" className='h-screen w-min' />}
                         </div>
                     </div>
                     <div className='w-full flex justify-end my-4 space-x-4'>

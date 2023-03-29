@@ -1,36 +1,52 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { UserContext } from '../../middlewares/User-state'
 import axios from 'axios'
+import Loading from '../Loading'
 
 
 const UserDetail = ({ user, post }) => {
     const { data } = useContext(UserContext);
 
-    const [userDetail, setUserDetail] = useState({})
+    const [followId, setFollowId] = useState(null)
+    const [userDetail, setUserDetail] = useState(null)
+    const [loading, setLoading] = useState(null)
 
-    const [isFollowing, setIsFollowing] = useState(false);
-
-    const [followId, setFollowId] = useState('') 
 
     useEffect(() => {
         setUserDetail(user)
         setFollowId(data.signed_user._id)
-        if (userDetail && userDetail.followers && userDetail.followers.includes(followId)) {
-            setIsFollowing(true);
-        } else {
-            setIsFollowing(false);
-        }
-    }, [user, data, userDetail])
+    }, [user, data])
 
-    const updateFollow = async (action) => {
+    function checkFollow(userDetail, followId) {
+        if (userDetail.followers.includes(followId)) {
+            return "unfollow";
+        }
+        return "follow";
+    }
+
+    const updateFollow = async () => {
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/follow/${userDetail._id}/${action}`, { followId });
+            setLoading(true);
+            if (!followId) {
+                return
+            }
+            const followStatus = checkFollow(userDetail, followId);
+            let res;
+
+            if (followStatus === "unfollow") {
+                res = await axios.put(`${process.env.REACT_APP_API_URL}/follow/${userDetail._id}/unfollow`, { followId });
+
+            } else {
+                res = await axios.put(`${process.env.REACT_APP_API_URL}/follow/${userDetail._id}/follow`, { followId });
+
+            }
             setUserDetail(res.data);
-            setIsFollowing(res.data.followers.includes(followId));
+            setLoading(false);
         } catch (error) {
             console.error(error);
         }
     }
+
 
 
 
@@ -48,42 +64,45 @@ const UserDetail = ({ user, post }) => {
         <div className="bg-white dark:bg-slate-700 rounded-md shadow-lg">
             <div className="w-full h-20 bg-primary">
             </div>
-            <div className="p-4 space-y-4">
+            {userDetail ?
+                <div className="p-4 space-y-4">
+                    <div className="w-full flex justify-center -mt-16" >
+                        <img className="rounded-xl " src={userDetail?.avatar} alt="" />
+                    </div>
+                    <div className="text-center text-xl">
+                        <p>{userDetail?.name}</p>
+                        <p className="text-slate-400 text-sm leading-3">{userDetail?.username}</p>
+                    </div>
+                    <div className="w-full flex justify-between p-[3%]">
+                        <div className="text-center  w-1/2">
+                            <p>Posts</p>
+                            <p className="text-slate-600 dark:text-slate-400">{post?.length}</p>
+                        </div>
+                        <div className="text-center  w-1/2">
+                            <p>Cake Day</p>
+                            <p className="text-slate-600 dark:text-slate-400">{convertDate(userDetail?.createdAt)}</p>
+                        </div>
+                    </div>
+                    <div className="w-full flex justify-between p-[3%]">
+                        <div className="text-center w-1/2">
+                            <p>Followers</p>
+                            <p className="text-slate-600 dark:text-slate-400">{userDetail?.followers?.length}</p>
+                        </div>
+                        <div className="text-center  w-1/2">
+                            <p>Following</p>
+                            <p className="text-slate-600 dark:text-slate-400">{userDetail?.followings?.length}</p>
+                        </div>
+                    </div>
+                    <div className='text-center'>
+                        <button className='sideBtn w-full bg-white hover:bg-semilight text-slate-800' onClick={(e) => updateFollow(checkFollow(userDetail, followId))} disabled={loading}>
+                            {loading ? "...." :
+                                checkFollow(userDetail, followId)}
+                        </button>
+                    </div>
 
-                <div className="p-6 -mt-20" >
-                    <img className="rounded-xl" src={userDetail?.avatar} alt="" />
-                </div>
-                <div className="text-center text-xl">
-                    <p>{userDetail?.name}</p>
-                    <p className="text-slate-400">{userDetail?.userDetailname}</p>
-                </div>
-                <div className="w-full flex justify-between p-[3%]">
-                    <div className="text-center  w-1/2">
-                        <p>Posts</p>
-                        <p className="text-slate-600 dark:text-slate-400">{post?.length}</p>
-                    </div>
-                    <div className="text-center  w-1/2">
-                        <p>Cake Day</p>
-                        <p className="text-slate-600 dark:text-slate-400">{convertDate(userDetail?.createdAt)}</p>
-                    </div>
-                </div>
-                <div className="w-full flex justify-between p-[3%]">
-                    <div className="text-center w-1/2">
-                        <p>Followers</p>
-                        <p className="text-slate-600 dark:text-slate-400">{userDetail?.followers?.length}</p>
-                    </div>
-                    <div className="text-center  w-1/2">
-                        <p>Following</p>
-                        <p className="text-slate-600 dark:text-slate-400">{userDetail?.followings?.length}</p>
-                    </div>
-                </div>
-                <div className='text-center'>
-                    <button className='sideBtn w-full bg-white hover:bg-semilight text-slate-800' onClick={(e) => updateFollow(e.target.innerText.toLowerCase())}>
-                        {isFollowing ? "Unfollow" : "Follow"}
-                    </button>
-                </div>
-
-            </div>
+                </div> :
+                <Loading />
+            }
         </div>
     )
 }
