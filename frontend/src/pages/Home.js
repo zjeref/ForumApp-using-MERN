@@ -6,7 +6,7 @@ import PostsCard from '../components/Home/PostsCard'
 import CreatePost from '../components/Home/CreatePost'
 import Footer from '../components/Footer'
 import CreateCommunity from '../components/Home/CreateCommunity'
-import Loading from '../components/Loading'
+import Loading from '../components/loading'
 
 const Home = () => {
     const { data } = useContext(UserContext);

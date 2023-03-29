@@ -6,7 +6,7 @@ import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md'
 import { formatTimeSinceCreation } from '../../middlewares/User-state'
 
 import Comment from './Comment'
-import Loading from '../Loading'
+import Loading from '../loading'
 
 const PostCard = ({ id }) => {
 
