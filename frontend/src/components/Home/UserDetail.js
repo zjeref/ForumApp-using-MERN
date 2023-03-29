@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { UserContext } from '../../middlewares/User-state'
 import axios from 'axios'
-import Loading from '../Loading'
+import Loading from '../loading'
 
 
 const UserDetail = ({ user, post }) => {

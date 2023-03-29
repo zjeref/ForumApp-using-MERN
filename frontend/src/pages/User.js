@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import PostsCard from '../components/Home/PostsCard'
-import CreatePost from '../components/Home/CreatePost'
 import Footer from '../components/Footer'
 import UserDetail from '../components/Home/UserDetail'
 
