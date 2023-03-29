@@ -11,7 +11,6 @@ exports.follow = asyncHandler(async (req, res) => {
     }
 
     const updateFollower = await User.findByIdAndUpdate(id, { $push: { followers: { $each: [followId] } } }, { new: true })
-        .populate('followers')
     const updateFollowing = await User.findByIdAndUpdate(followId, { $push: { followings: { $each: [id] } } }, { new: true })
     res.status(200).json(updateFollower)
 })
@@ -26,7 +25,6 @@ exports.unfollow = asyncHandler(async (req, res) => {
     }
 
     const updateFollower = await User.findByIdAndUpdate(id, { $pull: { followers: followId } }, { new: true })
-        .populate('followers')
     const updateFollowing = await User.findByIdAndUpdate(followId, { $pull: { followings: id } }, { new: true })
     res.status(200).json(updateFollower)
 })

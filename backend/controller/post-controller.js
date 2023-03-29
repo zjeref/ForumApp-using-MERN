@@ -18,20 +18,22 @@ exports.createPost = asyncHandler(async (req, res) => {
     const image = req.file;
     let imageUrl;
 
-    const body = {
-        image: image.buffer.toString('base64'), // Convert the file buffer to a base64-encoded string
-        type: 'base64'
-    };
-
-    const headers = {
-        Authorization: `Client-ID ${process.env.IMGUR_ID}`
-    }
-
-    try {
-        const res = await axios.post('https://api.imgur.com/3/image', body, { headers });
-        imageUrl = res.data.data.link
-    } catch (error) {
-        return res.status(501).json({ message: 'File Upload Error' });
+    if(image) {
+        const body = {
+            image: image.buffer.toString('base64'), // Convert the file buffer to a base64-encoded string
+            type: 'base64'
+        };
+    
+        const headers = {
+            Authorization: `Client-ID ${process.env.IMGUR_ID}`
+        }
+    
+        try {
+            const res = await axios.post('https://api.imgur.com/3/image', body, { headers });
+            imageUrl = res.data.data.link
+        } catch (error) {
+            return res.status(501).json({ message: 'File Upload Error' });
+        }
     }
 
     const newPost = new Post({
@@ -85,14 +87,20 @@ exports.upvote = asyncHandler(async (req, res) => {
             }
         })
         .populate('author', '-password -email')
-    if (currentPost.voters.includes(author)) {
-        currentPost.voters.pop(author);
+    if (currentPost.upvoters.includes(author)) {
+        // User has already upvoted, so remove their upvote
+        currentPost.upvoters.pull(author);
         currentPost.votes -= 1;
-        await currentPost.save();
-        return res.status(200).json(currentPost);
+    } else {
+        // User has not upvoted, so add their upvote
+        if (currentPost.downvoters.includes(author)) {
+            // User had previously downvoted, so remove their downvote
+            currentPost.downvoters.pull(author);
+            currentPost.votes += 1;
+        }
+        currentPost.upvoters.push(author);
+        currentPost.votes += 1;
     }
-    currentPost.voters.push(author);
-    currentPost.votes += 1;
     await currentPost.save();
     res.status(200).json(currentPost);
 });
@@ -109,17 +117,23 @@ exports.downvote = asyncHandler(async (req, res) => {
             }
         })
         .populate('author', '-password -email')
-    if (currentPost.voters.includes(author)) {
-        currentPost.voters.pop(author);
+    if (currentPost.downvoters.includes(author)) {
+        // User has already downvoted, so remove their downvote
+        currentPost.downvoters.pull(author);
         currentPost.votes += 1;
-        await currentPost.save();
-        return res.status(200).json(currentPost);
+    } else {
+        // User has not downvoted, so add their downvote
+        if (currentPost.upvoters.includes(author)) {
+            // User had previously upvoted, so remove their upvote
+            currentPost.upvoters.pull(author);
+            currentPost.votes -= 1;
+        }
+        currentPost.downvoters.push(author);
+        currentPost.votes -= 1;
     }
-    currentPost.voters.push(author);
-    currentPost.votes -= 1;
     await currentPost.save();
     res.status(200).json(currentPost);
-})
+});
 
 //    const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { vote: { $each: [userId] } } }, { new: true });
 exports.fetchPostbyAuthor = asyncHandler(async (req, res) => {

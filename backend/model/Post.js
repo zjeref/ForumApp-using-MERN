@@ -30,10 +30,16 @@ const postSchema = Schema({
         ref: 'Comment'
     }],
 
-    voters: [{
+    upvoters: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
+
+    downvoters: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+
     votes: {
         type: Number,
         default: 0

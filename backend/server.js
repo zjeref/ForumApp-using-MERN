@@ -9,10 +9,10 @@ const postRoutes = require('./routes/post-routes')
 const followRoutes = require('./routes/follow-routes')
 const threadRoutes = require('./routes/thread-routes')
 
-const db = 'mongodb+srv://ramkr0072:immindit123@projects.lgmd6wt.mongodb.net/?retryWrites=true&w=majority'
 
 
-mongoose.connect(db)
+
+mongoose.connect('mongodb+srv://ramkr0072:immindit123@projects.lgmd6wt.mongodb.net/?retryWrites=true&w=majority')
     .then(() => { console.log("DB CONNECTED") })
     .catch(err => { console.log(err) })
 
@@ -24,6 +24,6 @@ app.use(cors());
 app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/follow', followRoutes)
-app.use('/api/thread',threadRoutes)
+app.use('/api/thread', threadRoutes)
 
 app.listen(PORT, () => console.log(`${PORT}`))
