@@ -51,12 +51,9 @@ const PostsCard = ({ post }) => {
                 </div>
                 <div className="flex flex-col justify-between py-2 w-full">
                     <div className="mb-2">
-                        <h3 className='text-lg font-semibold'>{currentPost?.title}</h3>
+                        <h3 className='text-lg font-semibold line-clamp-2'>{currentPost?.title}</h3>
                         <div className='space-x-2'>
                             {currentPost.tags?.map((tag) => {
-                                if (tag === "") {
-                                    return
-                                }
                                 return <span key={tag} className='tag'>{tag}</span>
                             })}
                         </div>
